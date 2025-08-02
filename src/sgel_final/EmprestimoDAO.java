@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object para Emprestimo com integração ao banco de dados
+ * 
  * @author Tiago
  */
 public class EmprestimoDAO {
@@ -115,7 +115,6 @@ public class EmprestimoDAO {
         EmprestimoDTO emprestimo = new EmprestimoDTO();
         emprestimo.setId(rs.getInt("idEmprestimo"));
         
-        // Criar objetos simplificados de Aluno e Livro
         AlunoDTO aluno = new AlunoDTO();
         aluno.setId(rs.getInt("idAluno"));
         aluno.setNome(rs.getString("aluno_nome"));

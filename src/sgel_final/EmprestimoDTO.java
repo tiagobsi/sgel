@@ -3,7 +3,7 @@ package sgel_final;
 import java.time.LocalDateTime;
 
 /**
- * Data Transfer Object para Emprestimo
+ * 
  * @author Tiago
  */
 public class EmprestimoDTO {
@@ -29,7 +29,6 @@ public class EmprestimoDTO {
     public EmprestimoDTO() {
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -54,7 +53,6 @@ public class EmprestimoDTO {
         return idStatus;
     }
 
-    // Setters
     public void setId(int id) {
         this.id = id;
     }

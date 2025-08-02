@@ -1,7 +1,7 @@
 package sgel_final;
 
 /**
- * Data Transfer Object para Livro
+ * 
  * @author Tiago
  */
 public class LivroDTO {
@@ -30,7 +30,6 @@ public class LivroDTO {
     public LivroDTO() {
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -67,7 +66,6 @@ public class LivroDTO {
         return quantidade;
     }
 
-    // Setters
     public void setId(int id) {
         this.id = id;
     }

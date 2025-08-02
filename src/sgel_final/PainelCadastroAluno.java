@@ -161,7 +161,7 @@ public class PainelCadastroAluno extends JPanel implements Serializable {
     }
     
     private void cadastrarAluno(ActionEvent e) {
-        // Valida√ß√£o b√°sica
+       
         if (txtNomeAluno.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "O nome do aluno È obrigatÛrio", "Erro", JOptionPane.ERROR_MESSAGE);
             txtNomeAluno.requestFocus();

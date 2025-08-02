@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object para Aluno com integração ao banco de dados
+ * 
  * @author Tiago
  */
 public class AlunoDAO {

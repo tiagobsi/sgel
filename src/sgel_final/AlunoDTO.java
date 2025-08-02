@@ -1,7 +1,7 @@
 package sgel_final;
 
 /**
- * Data Transfer Object para Aluno
+ * 
  * @author Tiago
  */
 public class AlunoDTO {

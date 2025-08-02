@@ -39,13 +39,11 @@ public class EditarEmprestimoDialog extends JDialog {
         txtAluno.setEditable(false);
         formPanel.add(txtAluno);
         
-        
         formPanel.add(new JLabel("Livro:"));
         txtLivro = new JTextField(livro);
         txtLivro.setEditable(false);
         formPanel.add(txtLivro);
         
-
         formPanel.add(new JLabel("Data Empréstimo:"));
         try {
             txtDataEmprestimo = new JFormattedTextField(new MaskFormatter("##/##/####"));
@@ -67,7 +65,6 @@ public class EditarEmprestimoDialog extends JDialog {
         }
         formPanel.add(txtDataDevolucao);
         
-
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnSalvar = new JButton("Salvar");
         JButton btnCancelar = new JButton("Cancelar");

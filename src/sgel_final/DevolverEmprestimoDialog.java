@@ -26,7 +26,6 @@ public class DevolverEmprestimoDialog extends JDialog {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-       
         String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         
         JPanel infoPanel = new JPanel(new GridLayout(2, 1, 10, 10));
@@ -38,7 +37,6 @@ public class DevolverEmprestimoDialog extends JDialog {
         dataPanel.add(lblDataDevolucao);
         infoPanel.add(dataPanel);
         
-
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         JButton btnConfirmar = new JButton("Confirmar Devolução");
         JButton btnCancelar = new JButton("Cancelar");

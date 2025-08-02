@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object para Livro com integração ao banco de dados
+ * 
  * @author Tiago
  */
 public class LivroDAO {
