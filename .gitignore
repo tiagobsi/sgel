@@ -1,0 +1,42 @@
+# Ignora arquivos de build e temporários
+build/
+dist/
+out/
+*.class
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Ignora configurações locais do NetBeans
+nbproject/private/
+
+# Ignora bibliotecas externas, caso estejam fora do controle de versão
+lib/
+
+# Ignora arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignora arquivos gerados pelo NetBeans
+*.orig
+
+# Ignora arquivos de configuração do sistema operacional
+ehthumbs.db
+Icon?
+
+# Ignora caches e configurações do Java
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Ignora arquivos de pacotes e IDEs
+*.jar
+*.war
+*.ear
+
+# Ignora pastas de testes e relatórios (se não quiser versionar)
+test-output/
+reports/
