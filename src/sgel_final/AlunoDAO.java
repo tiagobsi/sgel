@@ -1,11 +1,14 @@
 package sgel_final;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import static sgel_final.BibliotecarioDAO.gerarHashSHA256;
 
 /**
  * 
@@ -13,8 +16,10 @@ import java.util.List;
  */
 public class AlunoDAO {
     
+    private static final String SENHA_PADRAO = "sgel@1234";
+    
     public static void cadastrarAluno(AlunoDTO aluno) {
-        String sql = "INSERT INTO aluno (nome, matricula, turma, email, telefone, idResponsavel, idPerfil) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO aluno (nome, matricula, turma, email, telefone, idResponsavel, idPerfil, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = Conexao.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -139,6 +144,7 @@ public class AlunoDAO {
     }
     
     private static void setAlunoParametros(PreparedStatement stmt, AlunoDTO aluno) throws SQLException {
+        String senhaHash = gerarHashSHA256(SENHA_PADRAO);
         stmt.setString(1, aluno.getNome());
         stmt.setString(2, aluno.getMatricula());
         stmt.setString(3, aluno.getSerieTurma());
@@ -146,6 +152,50 @@ public class AlunoDAO {
         stmt.setString(5, aluno.getTelefone());
         stmt.setInt(6, aluno.getIdResponsavel());
         stmt.setInt(7, aluno.getIdPerfil());
+        stmt.setString(8, senhaHash);
+    }
+    
+    public static boolean alterarSenha(int idAluno, String novaSenha) {
+        String sql = "UPDATE aluno SET senha = ? WHERE idAluno = ?";
+        
+        try (Connection conn = Conexao.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            String senhaHash = gerarHashSHA256(novaSenha);
+            
+            stmt.setString(1, senhaHash);
+            stmt.setInt(2, idAluno);
+            
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao alterar senha do aluno", e);
+        }
+    }
+    
+    private static String gerarHashSHA256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(input.getBytes());
+            
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            
+            return hexString.toString();
+            
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Erro ao gerar hash SHA-256", e);
+        }
+    }
+    
+    public static boolean verificarSenhaPadrao(String senhaHash) {
+        String hashPadrao = gerarHashSHA256(SENHA_PADRAO);
+        return hashPadrao.equals(senhaHash);
     }
     
     public static AlunoDTO buscarPorEmail(String email) {

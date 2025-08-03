@@ -237,7 +237,9 @@ public class PainelCadastroAluno extends JPanel implements Serializable {
         AlunoDAO.cadastrarAluno(alunoDTO);
         
         JOptionPane.showMessageDialog(this, 
-            "Aluno cadastrado com sucesso!\nMatrí­cula: " + aluno.getMatricula(), 
+            "Aluno cadastrado com sucesso!\nMatrí­cula: " + aluno.getMatricula() +
+            "Senha inicial padrão: sgel@1234\n" +
+            "Ao primeiro acesso, será solicitada a alteração da senha.",
             "Sucesso", 
             JOptionPane.INFORMATION_MESSAGE);
         

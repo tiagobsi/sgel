@@ -159,26 +159,69 @@ public class TelaLogin {
         try {
             boolean autenticado = false;
             String nomeUsuario = "";
+            int idUsuario = 0;
+            boolean isBibliotecario = false;
 
             switch (tipo) {
                 case "Aluno":
                     AlunoDTO aluno = AlunoDAO.buscarPorEmail(email);
-                    if (aluno != null && aluno.getSenha().equals(senha)) {
+                    if (aluno != null && verificarSenha(aluno.getSenha(), senha)) {
                         autenticado = true;
                         nomeUsuario = aluno.getNome();
+                        idUsuario = aluno.getId();
+                        
+                        if (BibliotecarioDAO.verificarSenhaPadrao(aluno.getSenha())) {
+                            ModalAlterarSenha modal = new ModalAlterarSenha(frame, idUsuario, false);
+                            modal.setVisible(true);
+                            
+                            if (modal.isSenhaAlterada()) {
+                                JOptionPane.showMessageDialog(frame, 
+                                    "Senha alterada com sucesso! Por favor, faça login novamente.", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(frame, 
+                                    "Você deve alterar sua senha para continuar!", 
+                                    "Aviso", 
+                                    JOptionPane.WARNING_MESSAGE);
+                            }
+                            return;
+                        }
                     }
                     break;
 
-                case "Bibliotecario":
+                case "Bibliotecário":
                     BibliotecarioDTO bibliotecario = BibliotecarioDAO.buscarPorEmail(email);
-                    if (bibliotecario != null && bibliotecario.getSenha().equals(senha)) {
+                    if (bibliotecario != null && verificarSenha(bibliotecario.getSenha(), senha)) {
                         autenticado = true;
                         nomeUsuario = bibliotecario.getNome();
+                        idUsuario = bibliotecario.getId();
+                        isBibliotecario = true;
+                        
+                        if (BibliotecarioDAO.verificarSenhaPadrao(bibliotecario.getSenha())) {
+                            ModalAlterarSenha modal = new ModalAlterarSenha(frame, idUsuario, true);
+                            modal.setVisible(true);
+                            
+                            if (modal.isSenhaAlterada()) {
+                                JOptionPane.showMessageDialog(frame, 
+                                    "Senha alterada com sucesso! Por favor, faça login novamente.", 
+                                    "Sucesso", 
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(frame, 
+                                    "Você deve alterar sua senha para continuar!", 
+                                    "Aviso", 
+                                    JOptionPane.WARNING_MESSAGE);
+                            }
+                            return;
+                        }
                     }
                     break;
 
                 case "Administrador":
+              
                     autenticado = true;
+                    nomeUsuario = "Administrador";
                     break;
             }
 
@@ -188,7 +231,7 @@ public class TelaLogin {
                     case "Aluno":
                         new AlunoDashboard(nomeUsuario).setVisible(true);
                         break;
-                    case "Bibliotecario":
+                    case "Bibliotecário":
                         new BibliotecarioDashboard().setVisible(true);
                         break;
                     case "Administrador":
@@ -206,6 +249,11 @@ public class TelaLogin {
                 "Erro ao acessar o banco de dados: " + e.getMessage(), 
                 "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private static boolean verificarSenha(String senhaHash, String senhaDigitada) {
+        String hashDigitado = BibliotecarioDAO.gerarHashSHA256(senhaDigitada);
+        return senhaHash.equals(hashDigitado);
     }
 
     private static void styleComboBox(JComboBox<?> combo) {

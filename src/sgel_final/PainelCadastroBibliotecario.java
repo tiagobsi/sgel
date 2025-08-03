@@ -98,13 +98,13 @@ public class PainelCadastroBibliotecario extends JPanel {
         bibliotecario.setCpf(cpfField.getText());
         bibliotecario.setTelefone(telefoneField.getText());
         bibliotecario.setIdPerfil(3);
-        //bibliotecario.setSenha(new String(senhaField.getPassword()));
-
 
         BibliotecarioDAO.cadastrarBibliotecario(bibliotecario);
 
             JOptionPane.showMessageDialog(this, 
-                "Bibliotecário cadastrado com sucesso!", 
+                "Bibliotecário cadastrado com sucesso!\n\n" +
+                "Senha inicial padrão: sgel@1234\n" +
+                "Ao primeiro acesso, será solicitada a alteração da senha.", 
                 "Sucesso", 
                 JOptionPane.INFORMATION_MESSAGE);
             limparCampos();  
